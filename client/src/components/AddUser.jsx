@@ -28,7 +28,7 @@ const AddUser = ({ open, setOpen, userData }) => {
     try {
       if(userData) {
         const result = await updateUser(data).unwrap();
-        toast.success(result?.message);
+        toast.success("Profile updated successfully.");
         if (userData?._id === user?._id) {
           dispatch(setCredentials({...result.user}));
         }
@@ -93,37 +93,17 @@ const AddUser = ({ open, setOpen, userData }) => {
               })}
               error={errors.email ? errors.email.message : ""}
             />
-
-            <div className="flex flex-col">
-              <label
-                htmlFor="role"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Role
-              </label>
-              <select
-                id="role"
-                {...register("role", {
-                  required: "User role is required!",
-                })}
-                className={`w-full rounded border ${
-                  errors.role ? "border-red-500" : "border-gray-300"
-                } px-3 py-2 focus:ring-blue-500 focus:border-blue-500`}
-              >
-                <option value="" disabled hidden>
-                  Select a role
-                </option>
-                <option value="Developer">Developer</option>
-                <option value="Analyst">Analyst</option>
-                <option value="Designer">Designer</option>
-                <option value="Manager">Manager</option>
-              </select>
-              {errors.role && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.role.message}
-                </p>
-              )}
-            </div>
+            <Textbox
+              placeholder="Role"
+              type="text"
+              name="role"
+              label="Role"
+              className="w-full rounded"
+              register={register("role", {
+                required: "User role is required!",
+              })}
+              error={errors.role ? errors.role.message : ""}
+            />
           </div>
 
           {isLoading || isUpdating ? (
