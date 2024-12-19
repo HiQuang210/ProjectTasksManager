@@ -1,18 +1,19 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ModalWrapper from "./ModalWrapper";
 import { Dialog } from "@headlessui/react";
 import Textbox from "./Textbox";
 import Loading from "./Loader";
 import Button from "./Button";
+import { toast } from "react-toastify";
+import { useRegisterMutation } from "../redux/slices/api/authApiSlice";
+import { useUpdateUserMutation } from "../redux/slices/api/userApiSlice";
+import { setCredentials } from "../redux/slices/authSlice";
 
 const AddUser = ({ open, setOpen, userData }) => {
   let defaultValues = userData ?? {};
   const { user } = useSelector((state) => state.auth);
-
-  const isLoading = false,
-    isUpdating = false;
 
   const {
     register,
@@ -20,7 +21,33 @@ const AddUser = ({ open, setOpen, userData }) => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const handleOnSubmit = () => {};
+  const dispatch = useDispatch()
+  const [addNewUser, {isLoading}] = useRegisterMutation()
+  const [updateUser, {isLoading: isUpdating}] = useUpdateUserMutation()
+  const handleOnSubmit = async(data) => {
+    try {
+      if(userData) {
+        const result = await updateUser(data).unwrap();
+        toast.success(result?.message);
+        if (userData?._id === user?._id) {
+          dispatch(setCredentials({...result.user}));
+        }
+    }else{
+      await addNewUser({
+        ...data,
+        password: data.email,
+      }).unwrap();
+
+      toast.success("New user added successfully!");
+    }
+    setTimeout(() => {
+      setOpen(false);
+    }, 1500)
+  } catch(error) {
+    console.log(error);
+    toast.error("Something went wrong ...");
+  }
+  };
 
   return (
     <>
@@ -67,17 +94,36 @@ const AddUser = ({ open, setOpen, userData }) => {
               error={errors.email ? errors.email.message : ""}
             />
 
-            <Textbox
-              placeholder='Role'
-              type='text'
-              name='role'
-              label='Role'
-              className='w-full rounded'
-              register={register("role", {
-                required: "User role is required!",
-              })}
-              error={errors.role ? errors.role.message : ""}
-            />
+            <div className="flex flex-col">
+              <label
+                htmlFor="role"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Role
+              </label>
+              <select
+                id="role"
+                {...register("role", {
+                  required: "User role is required!",
+                })}
+                className={`w-full rounded border ${
+                  errors.role ? "border-red-500" : "border-gray-300"
+                } px-3 py-2 focus:ring-blue-500 focus:border-blue-500`}
+              >
+                <option value="" disabled hidden>
+                  Select a role
+                </option>
+                <option value="Developer">Developer</option>
+                <option value="Analyst">Analyst</option>
+                <option value="Designer">Designer</option>
+                <option value="Manager">Manager</option>
+              </select>
+              {errors.role && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.role.message}
+                </p>
+              )}
+            </div>
           </div>
 
           {isLoading || isUpdating ? (

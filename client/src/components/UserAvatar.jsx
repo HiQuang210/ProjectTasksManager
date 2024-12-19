@@ -4,8 +4,10 @@ import { FaUser, FaUserLock } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { getInitials } from "../utils";
-
+import { useLogoutMutation } from "../redux/slices/api/authApiSlice"
+import { logout } from "../redux/slices/authSlice";
 const UserAvatar = () => {
   const [open, setOpen] = useState(false);
   const [openPassword, setOpenPassword] = useState(false);
@@ -13,8 +15,17 @@ const UserAvatar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const logoutHandler = () => {
-    console.log("logout");
+  const [logoutUser] = useLogoutMutation();
+
+  const logoutHandler = async() => {
+    try {
+      await logoutUser().unwrap();
+      dispatch(logout());
+      navigate("/log-in");
+      toast.success("Logged out successfully!");
+    } catch (error) {
+      toast.error("Something went wrong ...")
+    }
   };
 
   return (

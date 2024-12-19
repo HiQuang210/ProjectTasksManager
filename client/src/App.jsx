@@ -4,7 +4,8 @@ import { Fragment, useRef } from "react";
 import { IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom";
-import { Toaster } from "sonner";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Login from "./pages/Login";
@@ -111,7 +112,7 @@ function App() {
         <Route path='/log-in' element={<Login />} />
       </Routes>
 
-      <Toaster richColors />
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </main>
   );
 }

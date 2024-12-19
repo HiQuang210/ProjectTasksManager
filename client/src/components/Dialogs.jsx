@@ -1,6 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import clsx from "clsx";
-import { FaQuestion } from "react-icons/fa";
+import { FaQuestion, FaExclamationTriangle } from "react-icons/fa";
 import ModalWrapper from "./ModalWrapper";
 import Button from "./Button";
 
@@ -32,7 +32,7 @@ export default function ConfirmatioDialog({
                   : "text-red-600 bg-red-200"
               )}
             >
-              <FaQuestion size={60} />
+              <FaExclamationTriangle size={50} />
             </p>
           </Dialog.Title>
 
