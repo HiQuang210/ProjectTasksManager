@@ -1,6 +1,5 @@
 import React from 'react';
 import ModalWrapper from './ModalWrapper';
-import Button from "./Button";
 import { Dialog } from "@headlessui/react";
 
 const ViewNotification = ({ open, setOpen, el }) => {
@@ -8,18 +7,23 @@ const ViewNotification = ({ open, setOpen, el }) => {
         <>
             <ModalWrapper open={open} setOpen={setOpen}>
                 <div classname='py-4 w-full flex flex-col gap-4 items-center justify-center'>
-                    <Dialog.Title as='h3' classname='font-semibold text-lg'>
+                <Dialog.Title 
+                        as='h3' 
+                        className='font-bold text-xl text-center mb-2'
+                    >
                         {el?.task?.title}
                     </Dialog.Title>
 
-                    <p classname='text-start text-gray-500'>{el?.text}</p>
+                    <p className='text-center text-gray-500'>{el?.text}</p>
 
-                    <Button
-                        type = 'button'
-                        classname = 'bg-white px-8 mt-3 text-sm font-semibold text-gray-900 sm:w-auto border-blue-200'
-                        onClick={() => setOpen(false)}
-                        label='Ok'
-                    />
+                    <div className="flex justify-center mt-4">
+                        <button
+                            type="button"
+                            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md font-medium"
+                            onClick={() => setOpen(false)}>
+                            OK
+                        </button>
+                    </div>
                 </div>
             </ModalWrapper>
         </>

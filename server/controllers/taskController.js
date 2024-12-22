@@ -15,9 +15,7 @@ export const createTask = async (req, res) => {
 
     text =
       text +
-      ` The task priority is set a ${priority} priority, so check and act accordingly. The task date is ${new Date(
-        date
-      ).toDateString()}. Thank you!!!`;
+       `The task priority is set with a ${priority} priority, so check and act accordingly. The task date is ${new Date(date).toDateString()}. Thank you!!!`;
 
     const activity = {
       type: "assigned",
@@ -56,9 +54,28 @@ export const duplicateTask = async (req, res) => {
 
     const task = await Task.findById(id);
 
+    let baseTitle = task.title;
+    let match = baseTitle.match(/- Duplicate(?: \((\d+)\))?$/);
+
+    if (match) {
+      if (match[1]) {
+        // If the title has "- Duplicate (x)", increment x
+        const duplicateNumber = parseInt(match[1], 10);
+        baseTitle = baseTitle.replace(/- Duplicate(?: \(\d+\))?$/, `- Duplicate (${duplicateNumber + 1})`);
+      } else {
+        // If the title has "- Duplicate", add "(2)"
+        baseTitle += " (2)";
+      }
+    } else {
+      // If the title doesn't have "- Duplicate", add it
+      baseTitle += " - Duplicate";
+    }
+
+    // Create a new duplicated task
     const newTask = await Task.create({
-      ...task,
-      title: task.title + " - Duplicate",
+      ...task.toObject(), // Use toObject to avoid mongoose schema references
+      _id: undefined, // Remove the _id to let MongoDB generate a new one
+      title: baseTitle,
     });
 
     newTask.team = task.team;
@@ -77,9 +94,7 @@ export const duplicateTask = async (req, res) => {
 
     text =
       text +
-      ` The task priority is set a ${
-        task.priority
-      } priority, so check and act accordingly. The task date is ${task.date.toDateString()}. Thank you!!!`;
+      ` The task priority is set with a ${task.priority} priority, so check and act accordingly. The task date is ${task.date.toDateString()}. Thank you!!!`;
 
     await Notice.create({
       team: task.team,
@@ -89,7 +104,7 @@ export const duplicateTask = async (req, res) => {
 
     res
       .status(200)
-      .json({ status: true, message: "Task modified successfully." });
+      .json({ status: true, message: "Task duplicated successfully." });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });
@@ -295,7 +310,7 @@ export const updateTask = async (req, res) => {
 
     res
       .status(200)
-      .json({ status: true, message: "Task duplicated successfully." });
+      .json({ status: true, message: "Task updated successfully." });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });

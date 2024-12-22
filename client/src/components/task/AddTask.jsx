@@ -72,7 +72,7 @@ const AddTask = ({ open, setOpen, task }) => {
        : await createTask(newData).unwrap();
 
        toast.success(res.message);
-
+      
        setTimeout(() => {
         window.location.reload();
       }, 2000); 

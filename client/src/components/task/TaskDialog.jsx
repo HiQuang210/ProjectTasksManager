@@ -30,7 +30,7 @@ const TaskDialog = ({ task }) => {
     setTimeout(() => {
       setOpenDialog(false);
       window.location.reload();
-    }, 500);
+    }, 1500);
   } catch (err) {
     console.log(err);
     toast.error(err?.data?.message || err.error);
@@ -41,7 +41,7 @@ const TaskDialog = ({ task }) => {
   };
   const deleteHandler = async() => {
     try {
-      const res = await deleteTask({
+      const res = await trashTask({
         id: task._id,
         isTrashed: "trash",
       }).unwrap();
@@ -51,7 +51,7 @@ const TaskDialog = ({ task }) => {
       setTimeout(() => {
         setOpenDialog(false);
         window.location.reload();
-      }, 500);
+      }, 1500);
     } catch (err)
     {
       console.log(err);

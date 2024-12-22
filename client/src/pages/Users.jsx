@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import Title from "../components/Title";
 import Button from "../components/Button";
 import { IoPersonAdd } from "react-icons/io5";
-import { summary } from "../assets/data";
 import { getInitials } from "../utils";
 import clsx from "clsx";
-import ConfirmatioDialog, { UserAction } from "../components/Dialogs";
+import ConfirmationDialog, { UserAction } from "../components/Dialogs";
 import { toast } from "react-toastify";
 import AddUser from "../components/AddUser";
 import { useDeleteUserMutation, useUserActionMutation, useGetTeamListQuery } from "../redux/slices/api/userApiSlice";
@@ -163,7 +162,7 @@ const Users = () => {
         key={new Date().getTime().toString()}
       />
 
-      <ConfirmatioDialog
+      <ConfirmationDialog
         open={openDialog}
         setOpen={setOpenDialog}
         onClick={deleteHandler}
