@@ -112,7 +112,7 @@ function App() {
         <Route path='/log-in' element={<Login />} />
       </Routes>
 
-      <ToastContainer position="bottom-right" autoClose={3000} />
+      <ToastContainer position="bottom-right" autoClose={2000} />
     </main>
   );
 }
