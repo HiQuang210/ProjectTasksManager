@@ -76,7 +76,7 @@ const AddTask = ({ open, setOpen, task }) => {
        setTimeout(() => {
         window.location.reload();
       }, 2000); 
-    } catch {
+    } catch (err) {
       console.log(err);
       toast.error(err?.data?.message || err.error);
     }
