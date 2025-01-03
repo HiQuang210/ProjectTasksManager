@@ -15,7 +15,7 @@ const ChangePassword = ({ open, setOpen }) => {
         formState: { errors },
     } = useForm();
 
-    const [changeUserPassword, { isLoading}] = useChangePasswordMutation();
+    const [changeUserPassword, { isLoading }] = useChangePasswordMutation();
     const handleOnSubmit = async(data) => {
         if (data.password !== data.confirmpass) {
             toast.warning("Passwords do not match.");

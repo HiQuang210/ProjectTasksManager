@@ -35,7 +35,7 @@ const AddUser = ({ open, setOpen, userData }) => {
     }else{
       await addNewUser({
         ...data,
-        password: data.email,
+        password: data.password,
       }).unwrap();
 
       toast.success("New user added successfully!");
@@ -92,6 +92,17 @@ const AddUser = ({ open, setOpen, userData }) => {
                 required: "Email Address is required!",
               })}
               error={errors.email ? errors.email.message : ""}
+            />
+            <Textbox
+            placeholder="Password"
+            type="password"
+            name="password"
+            label="Password"
+            className="w-full rounded"
+            register={register("password", {
+              required: "Password is required!",
+            })}
+            error={errors.password ? errors.password.message : ""}
             />
             <Textbox
               placeholder="Role"

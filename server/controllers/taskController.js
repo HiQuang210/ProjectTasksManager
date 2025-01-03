@@ -59,7 +59,6 @@ export const duplicateTask = async (req, res) => {
 
     if (match) {
       if (match[1]) {
-        // If the title has "- Duplicate (x)", increment x
         const duplicateNumber = parseInt(match[1], 10);
         baseTitle = baseTitle.replace(/- Duplicate(?: \(\d+\))?$/, `- Duplicate (${duplicateNumber + 1})`);
       } else {
@@ -67,14 +66,12 @@ export const duplicateTask = async (req, res) => {
         baseTitle += " (2)";
       }
     } else {
-      // If the title doesn't have "- Duplicate", add it
       baseTitle += " - Duplicate";
     }
 
-    // Create a new duplicated task
     const newTask = await Task.create({
-      ...task.toObject(), // Use toObject to avoid mongoose schema references
-      _id: undefined, // Remove the _id to let MongoDB generate a new one
+      ...task.toObject(), 
+      _id: undefined, 
       title: baseTitle,
     });
 

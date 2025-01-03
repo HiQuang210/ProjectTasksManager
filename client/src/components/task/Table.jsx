@@ -6,7 +6,7 @@ import {
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
 } from "react-icons/md";
-import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate } from "../../utils";
+import { BGS, PRIORITYSTYLES, TASK_TYPE, formatDate } from "../../utils";
 import clsx from "clsx";
 import { FaList } from "react-icons/fa";
 import UserInfo from "../UserInfo";
@@ -85,7 +85,7 @@ const Table = ({ tasks }) => {
 
       <td className='py-2'>
         <div className={"flex gap-1 items-center"}>
-          <span className={clsx("text-lg", PRIOTITYSTYELS[task?.priority])}>
+          <span className={clsx("text-lg", PRIORITYSTYLES[task?.priority])}>
             {ICONS[task?.priority]}
           </span>
           <span className='capitalize line-clamp-1'>

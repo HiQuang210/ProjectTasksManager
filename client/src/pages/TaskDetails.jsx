@@ -15,7 +15,7 @@ import { RxActivityLog } from "react-icons/rx";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Tabs from "../components/Tabs";
-import { PRIOTITYSTYELS, TASK_TYPE, getInitials } from "../utils";
+import { PRIORITYSTYLES, TASK_TYPE, getInitials } from "../utils";
 import Loading from "../components/Loader";
 import Button from "../components/Button";
 import { useGetSingleTaskQuery, usePostTaskActivityMutation } from "../redux/slices/api/taskApiSlice";
@@ -114,7 +114,7 @@ const TaskDetails = () => {
                   <div
                     className={clsx(
                       "flex gap-1 items-center text-base font-semibold px-3 py-1 rounded-full",
-                      PRIOTITYSTYELS[task?.priority],
+                      PRIORITYSTYLES[task?.priority],
                       bgColor[task?.priority]
                     )}
                   >

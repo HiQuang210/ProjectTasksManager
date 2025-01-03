@@ -11,7 +11,7 @@ import {
 } from "react-icons/md";
 import clsx from "clsx";
 import { Chart } from "../components/Chart";
-import { BGS, PRIOTITYSTYELS, TASK_TYPE, getInitials } from "../utils";
+import { BGS, PRIORITYSTYLES, TASK_TYPE, getInitials } from "../utils";
 import UserInfo from "../components/UserInfo";
 import Loading from "../components/Loader";
 import { useGetDashBoardStatsQuery } from "../redux/slices/api/taskApiSlice";
@@ -48,7 +48,7 @@ const TaskTable = ({ tasks }) => {
 
       <td className='py-2'>
         <div className='flex gap-1 items-center'>
-          <span className={clsx("text-lg", PRIOTITYSTYELS[task.priority])}>
+          <span className={clsx("text-lg", PRIORITYSTYLES[task.priority])}>
             {ICONS[task.priority]}
           </span>
           <span className='capitalize'>{task.priority}</span>

@@ -10,7 +10,7 @@ import {
 import Title from "../components/Title";
 import Button from "../components/Button";
 import { toast } from "react-toastify"
-import { PRIOTITYSTYELS, TASK_TYPE } from "../utils";
+import { PRIORITYSTYLES, TASK_TYPE } from "../utils";
 import Loading from "../components/Loader";
 import ConfirmationDialog from "../components/Dialogs";
 import { useGetAllTaskQuery, useDeleteRestoreTaskMutation } from "../redux/slices/api/taskApiSlice";
@@ -137,7 +137,7 @@ const Trash = () => {
 
       <td className='py-2 capitalize'>
         <div className={"flex gap-1 items-center"}>
-          <span className={clsx("text-lg", PRIOTITYSTYELS[item?.priority])}>
+          <span className={clsx("text-lg", PRIORITYSTYLES[item?.priority])}>
             {ICONS[item?.priority]}
           </span>
           <span className=''>{item?.priority}</span>
